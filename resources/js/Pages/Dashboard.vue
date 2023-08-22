@@ -27,30 +27,21 @@ const date = new Date().getFullYear();
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <MainCard
                     :title="'Saldo'"
-                    :value="
-                        new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR',
-                        }).format(props.saldo)
+                    :value="'Rp.'+
+                        new Intl.NumberFormat('id-ID').format(props.saldo)
                     "
                 ></MainCard>
                 <MainCard
                     :title="'Pemasukan'"
-                    :value="
-                        new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR',
-                        }).format(props.pemasukan)
+                    :value="'Rp.'+
+                        new Intl.NumberFormat('id-ID').format(props.pemasukan)
                     "
                     :desc="date"
                 ></MainCard>
                 <MainCard
                     :title="'Pengeluaran'"
-                    :value="
-                        new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR',
-                        }).format(props.pengeluaran)
+                    :value="'Rp.'+
+                        new Intl.NumberFormat('id-ID').format(props.pengeluaran)
                     "
                     :desc="date"
                 ></MainCard>

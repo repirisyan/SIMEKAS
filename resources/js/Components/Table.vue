@@ -40,19 +40,19 @@ const props = defineProps({
     <div class="join mt-2 mx-auto">
         <Link
             :href="prev_page"
-            class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 join-item btn btn-sm"
+            class="bg-white text-black dark:text-white hover:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 join-item btn btn-sm"
             v-if="current_page - 1 > 0"
             >«</Link
         >
         <button
             type="button"
-            class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 join-item btn btn-sm"
+            class="bg-white text-black dark:text-white hover:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 join-item btn btn-sm"
         >
             {{ current_page ?? "" }}
         </button>
         <Link
             :href="next_page"
-            class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500join-item btn btn-sm"
+            class="bg-white text-black dark:text-white hover:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500join-item btn btn-sm"
             v-if="next_page != null"
             >»</Link
         >

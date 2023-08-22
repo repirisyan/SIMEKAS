@@ -213,12 +213,12 @@ let isTableEmpty = Object.keys(props.projects.data).length == 0;
             <div class="card w-auto bg-white dark:bg-gray-800 shadow-xl">
                 <div class="card-body">
                     <div
-                        class="card-title grid grid-cols-1 sm:grid-cols-2 sm:justify-between"
+                        class="card-title flex overflow-x-auto"
                     >
                         <PrimaryButton
                             class="mr-2"
                             @click="openModal('Modal Tambah')"
-                            >Tambah +
+                            >Tambah&nbsp;+
                         </PrimaryButton>
                         <div class="join w-full sm:justify-end">
                             <div>
@@ -305,12 +305,9 @@ let isTableEmpty = Object.keys(props.projects.data).length == 0;
                                     {{new Date(project.start_from).toLocaleDateString("id-ID") }} -
                                     {{ new Date(project.until).toLocaleDateString("id-ID") }}
                                 </td>
-                                <td>
+                                <td>Rp.
                                     {{
-                                        new Intl.NumberFormat("id-ID", {
-                                            style: "currency",
-                                            currency: "IDR",
-                                        }).format(project.project_worth)
+                                        new Intl.NumberFormat("id-ID").format(project.project_worth)
                                     }}
                                 </td>
                                 <td>
@@ -517,7 +514,7 @@ let isTableEmpty = Object.keys(props.projects.data).length == 0;
                         />
                     </div>
                     <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="project_worth" value="Harga Project" />
+                        <InputLabel for="project_worth" :value="'Harga Project (Rp.'+new Intl.NumberFormat('id-ID').format(projectForm.project_worth)+')'" />
                         <TextInput
                             id="project_worth"
                             v-model.lazy="projectForm.project_worth"
@@ -651,7 +648,7 @@ let isTableEmpty = Object.keys(props.projects.data).length == 0;
                         v-if="projectForm.host_type == '2'"
                         class="col-span-6 sm:col-span-4"
                     >
-                        <InputLabel for="price" value="Harga Hosting" />
+                        <InputLabel for="price" :value="'Harga Hosting (Rp.'+new Intl.NumberFormat('id-ID').format(projectForm.price)+')'" />
                         <TextInput
                             id="price"
                             v-model.lazy="projectForm.price"
@@ -751,12 +748,9 @@ let isTableEmpty = Object.keys(props.projects.data).length == 0;
                         </tr>
                         <tr v-if="formDetail.host_type == '2'">
                             <th>Harga</th>
-                            <td>
+                            <td>Rp.
                                 {{
-                                    new Intl.NumberFormat("id-ID", {
-                                        style: "currency",
-                                        currency: "IDR",
-                                    }).format(formDetail.price)
+                                    new Intl.NumberFormat("id-ID").format(formDetail.price)
                                 }}
                             </td>
                         </tr>

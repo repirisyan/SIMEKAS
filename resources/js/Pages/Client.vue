@@ -155,14 +155,14 @@ let isTableEmpty = Object.keys(props.clients.data).length == 0;
             <div class="card w-auto bg-white dark:bg-gray-800 shadow-xl">
                 <div class="card-body">
                     <div
-                        class="card-title grid grid-cols-1 sm:grid-cols-2 justify-between"
+                        class="card-title flex overflow-x-auto"
                     >
                         <PrimaryButton
-                            class="mr-2 w-28"
+                            class="mr-2"
                             @click="openModal('Modal Tambah')"
-                            >Tambah +
+                            >Tambah&nbsp;+
                         </PrimaryButton>
-                        <div class="join sm:justify-end">
+                        <div class="join w-full sm:justify-end">
                             <div>
                                 <div>
                                     <input

@@ -1,0 +1,1 @@
+import{o as a,c as e,w as o,u as t,j as s,a as r}from"./app-f422ae6e.js";const c=r("img",{src:"/main-logo.png",alt:"Logo FDR"},null,-1),l={__name:"AuthenticationCardLogo",setup(n){return(_,i)=>(a(),e(t(s),{href:"/"},{default:o(()=>[c]),_:1}))}};export{l as _};

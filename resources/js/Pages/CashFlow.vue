@@ -165,23 +165,19 @@ let isTableEmpty = Object.keys(props.cashflows.data).length == 0;
             <div class="card w-auto bg-white dark:bg-gray-800 shadow-xl">
                 <div class="card-body">
                     <div
-                        class="card-title grid grid-cols-1 sm:grid-cols-2 sm:justify-between"
+                        class="card-title flex overflow-x-auto"
                     >
                         <PrimaryButton
                             class="mr-2"
                             @click="openModal('Modal Tambah')"
-                            >Tambah +
+                            >Tambah&nbsp;+
                         </PrimaryButton>
-                        <div class="join w-full sm:justify-end">
-                            <div>
-                                <div>
+                        <div class="join w-full sm:justify-end text-white">
                                     <input
                                         v-model.lazy="filterForm.search"
                                         class="input input-bordered join-item w-auto"
                                         placeholder="Cari Judul"
                                     />
-                                </div>
-                            </div>
                             <select
                                 v-model.lazy="filterForm.type"
                                 class="select select-bordered join-item w-auto sm:w-32"
@@ -236,7 +232,7 @@ let isTableEmpty = Object.keys(props.cashflows.data).length == 0;
                         <template #content v-if="isTableEmpty == false">
                             <tr
                                 v-for="cashflow in props.cashflows.data"
-                                :key="cashflow.id" class="hover"
+                                :key="cashflow.id" class="hover hover:text-white"
                             >
                                 <td>{{ cashflow.user.name }}</td>
                                 <td>{{ cashflow.title }}</td>
@@ -284,12 +280,9 @@ let isTableEmpty = Object.keys(props.cashflows.data).length == 0;
                                     </div>
                                     <span v-else> Tidak ada data </span>
                                 </td>
-                                <td>
+                                <td>Rp.
                                     {{
-                                        new Intl.NumberFormat("id-ID", {
-                                            style: "currency",
-                                            currency: "IDR",
-                                        }).format(cashflow.amount)
+                                        new Intl.NumberFormat("id-ID").format(cashflow.amount)
                                     }}
                                 </td>
                                 <td>
@@ -465,7 +458,7 @@ let isTableEmpty = Object.keys(props.cashflows.data).length == 0;
                     </div>
 
                     <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="amount" value="Jumlah" />
+                        <InputLabel for="amount" :value="'Jumlah (Rp.'+new Intl.NumberFormat('id-ID').format(titleModal == 'Modal Tambah' ? cashFlowForm.amount : cashFlowForm.new_amount)+')'" />
                         <TextInput
                             v-if="titleModal == 'Modal Tambah'"
                             id="amount"
