@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MoneyBalance;
 use App\Models\CashFlow;
-use App\Models\CLient;
+use App\Models\Client;
 use App\Models\Project;
 use Inertia\Inertia;
 
