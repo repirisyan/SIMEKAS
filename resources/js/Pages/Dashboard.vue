@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import MainCard from "@/Components/MainCard.vue";
+import LineChart from "@/Components/LineChart.vue";
 
 const props = defineProps({
     saldo: Number,
@@ -8,9 +9,44 @@ const props = defineProps({
     pengeluaran: Number,
     client: Number,
     project: Number,
+    chart: Object
+});
+const date = new Date().getFullYear();
+
+let data_pemasukan = [];
+let data_pengeluaran = [];
+let labels = [];
+
+props.chart.forEach((element) => {
+    if (!labels.includes(element.years)) {
+        labels.push(element.years);
+    }
+    if (element.type == '1') {
+        data_pemasukan.push(element.data)
+    }else{
+        data_pengeluaran.push(element.data)
+    }
 });
 
-const date = new Date().getFullYear();
+const chartData = {
+    labels: labels,
+    datasets: [
+               {
+                 label: 'Pemasukan',
+                 backgroundColor: '#32cd32',
+                 data: data_pemasukan
+               },
+               {
+                 label: 'Pengeluaran',
+                 backgroundColor: '#fa8072',
+                 data: data_pengeluaran
+               }
+            ],
+    chartOptions: {
+         responsive: true,
+         maintainAspectRatio: false
+    }
+}
 </script>
 
 <template>
@@ -56,6 +92,11 @@ const date = new Date().getFullYear();
                     :value="props.project"
                 ></MainCard>
             </div>
+                <div class="stats mt-4 shadow bg-white dark:bg-gray-800 dark:text-white">
+                <div class="stat">
+                      <LineChart :data="chartData" />
+                </div>
+             </div>
         </div>
     </AppLayout>
 </template>

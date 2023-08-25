@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\CashFlow;
 use App\Models\MoneyBalance;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Image\Image;
@@ -47,8 +48,13 @@ class CashFlowController extends Controller
                 'description' => $request->description,
                 'image' => $filename,
                 'amount' => $request->amount,
-            ]);
-                MoneyBalance::find(1)->increment('balance',$request->amount);
+                ]);
+                if ($request->type == '1') {
+                    MoneyBalance::find(1)->increment('balance',$request->amount);
+                } else {
+                    MoneyBalance::find(1)->decrement('balance',$request->amount);
+                }
+                
             });
             return to_route('cashflow.index')->with('message',array('success','Data berhasil disimpan'));
         } catch (Exception $e) {
@@ -89,8 +95,14 @@ class CashFlowController extends Controller
                 'image' => $request->image,
                 'amount' => $request->new_amount
             ]);
-                MoneyBalance::find(1)->decrement('balance',$request->amount);
-                MoneyBalance::find(1)->increment('balance',$request->new_amount);
+                if ($request->type == '1') {
+                   MoneyBalance::find(1)->decrement('balance',$request->amount);
+                    MoneyBalance::find(1)->increment('balance',$request->new_amount);
+                } else {
+                     MoneyBalance::find(1)->increment('balance',$request->amount);
+                    MoneyBalance::find(1)->decrement('balance',$request->new_amount);
+                }
+                
             });
             return to_route('cashflow.index')->with('message',['success','Data berhasil diubah']);
         } catch (Exception $e) {

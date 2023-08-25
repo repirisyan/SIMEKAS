@@ -30,6 +30,8 @@ const isTableEmpty = computed(() => {
     return Object.keys(props.cashflows.data).length == 0;
 });
 
+
+
 let titleModal = null;
 let id_cashflow = null;
 let progress = false;
@@ -373,7 +375,7 @@ const filterCashFlow = () => {
                                 type="radio"
                                 name="radio-10"
                                 checked
-                                value="'1'"
+                                value="1"
                                 v-model.lazy="cashFlowForm.type"
                                 :readonly="cashFlowForm.processing"
                             />
@@ -383,7 +385,7 @@ const filterCashFlow = () => {
                             <input
                                 type="radio"
                                 name="radio-10"
-                                value="'2'"
+                                value="2"
                                 v-model.lazy="cashFlowForm.type"
                                 :readonly="cashFlowForm.processing"
                             />
