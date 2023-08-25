@@ -59,7 +59,7 @@ const chartData = {
             </h2>
         </template>
 
-        <div class="p-12 text-center">
+        <div class="p-5 lg:p-12 text-center">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <MainCard
                     :title="'Saldo'"
@@ -92,7 +92,7 @@ const chartData = {
                     :value="props.project"
                 ></MainCard>
             </div>
-                <div class="stats mt-4 shadow bg-white dark:bg-gray-800 dark:text-white">
+            <div class="stats mt-4 shadow bg-white dark:bg-gray-800 dark:text-white">
                 <div class="stat">
                       <LineChart :data="chartData" />
                 </div>

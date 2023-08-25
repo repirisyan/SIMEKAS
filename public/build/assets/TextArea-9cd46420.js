@@ -1,0 +1,3 @@
+import{d as s,C as d,o as n,e as l,t as i}from"./app-49957680.js";const c=["value"],g={__name:"TextArea",props:{modelValue:String},emits:["update:modelValue"],setup(o,{expose:r}){const e=s(null);return d(()=>{e.value.hasAttribute("autofocus")&&e.value.focus()}),r({focus:()=>e.value.focus()}),(t,a)=>(n(),l("textarea",{value:o.modelValue,ref_key:"input",ref:e,onInput:a[0]||(a[0]=u=>t.$emit("update:modelValue",u.target.value)),class:"border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm",rows:"5",cols:"10"},`
+        `+i(o.modelValue)+`
+    `,41,c))}};export{g as _};

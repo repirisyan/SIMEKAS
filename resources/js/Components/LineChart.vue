@@ -25,13 +25,6 @@ ChartJS.register(
 export default {
   name: 'LineChart',
   components: { Line },
-  computed: {
-    myStyles () {
-      return {
-        height: `300px`,
-      }
-    }
-  },
   data() {
     return
   }
@@ -39,5 +32,5 @@ export default {
 </script>
 
 <template>
-  <Line :data="data" :options="options" :style="myStyles" />
+  <Line :data="data" :options="options" class="w-auto lg:w-[50rem]" />
 </template>
