@@ -2,7 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import DialogModal from "@/Components/DialogModal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { ref } from "vue";
+import { ref,computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Table from "@/Components/Table.vue";
 import InputError from "@/Components/InputError.vue";
@@ -20,11 +20,16 @@ import { router } from "@inertiajs/vue3";
 const modal = ref(false);
 const modalHapus = ref(false);
 const modalDetail = ref(false);
+
 const page = usePage();
 
 const props = defineProps({
     clients: Object,
     projects: Object,
+});
+
+const isTableEmpty = computed(() => {
+    return Object.keys(props.projects.data).length == 0;
 });
 
 let titleModal = null;
@@ -192,7 +197,6 @@ const filterCashFlow = () => {
     });
 };
 
-let isTableEmpty = Object.keys(props.projects.data).length == 0;
 </script>
 
 <template>
@@ -276,6 +280,7 @@ let isTableEmpty = Object.keys(props.projects.data).length == 0;
                             'Status',
                             'Aksi',
                         ]"
+                        :empty="isTableEmpty"
                         :current_page="props.projects.current_page"
                         :next_page="props.projects.next_page_url"
                         :prev_page="
@@ -284,7 +289,7 @@ let isTableEmpty = Object.keys(props.projects.data).length == 0;
                             (props.projects.current_page - 1)
                         "
                     >
-                        <template #content v-if="isTableEmpty == false">
+                        <template #content>
                             <tr
                                 v-for="project in props.projects.data"
                                 :key="project.id"
@@ -421,11 +426,6 @@ let isTableEmpty = Object.keys(props.projects.data).length == 0;
                                         </svg>
                                     </button>
                                 </td>
-                            </tr>
-                        </template>
-                        <template #empty v-else>
-                            <tr class="text-center">
-                                <td colspan="8">Tidak ada data</td>
                             </tr>
                         </template>
                     </Table>

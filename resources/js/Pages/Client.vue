@@ -2,7 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import DialogModal from "@/Components/DialogModal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { ref } from "vue";
+import { ref,computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Table from "@/Components/Table.vue";
 import InputError from "@/Components/InputError.vue";
@@ -17,6 +17,9 @@ import { router } from "@inertiajs/vue3";
 
 const modal = ref(false);
 const modalHapus = ref(false);
+const isTableEmpty = computed(() => {
+    return Object.keys(props.clients.data).length == 0;
+})
 
 const page = usePage();
 
@@ -135,7 +138,6 @@ const filterClient = () => {
     });
 };
 
-let isTableEmpty = Object.keys(props.clients.data).length == 0;
 </script>
 
 <template>
@@ -154,9 +156,7 @@ let isTableEmpty = Object.keys(props.clients.data).length == 0;
         <div class="p-12">
             <div class="card w-auto bg-white dark:bg-gray-800 shadow-xl">
                 <div class="card-body">
-                    <div
-                        class="card-title flex overflow-x-auto"
-                    >
+                    <div class="card-title flex overflow-x-auto">
                         <PrimaryButton
                             class="mr-2"
                             @click="openModal('Modal Tambah')"
@@ -205,6 +205,7 @@ let isTableEmpty = Object.keys(props.clients.data).length == 0;
                             'Alamat',
                             'Aksi',
                         ]"
+                        :empty="isTableEmpty"
                         :current_page="props.clients.current_page"
                         :next_page="props.clients.next_page_url"
                         :prev_page="
@@ -213,7 +214,7 @@ let isTableEmpty = Object.keys(props.clients.data).length == 0;
                             (props.clients.current_page - 1)
                         "
                     >
-                        <template #content v-if="isTableEmpty == false">
+                        <template #content>
                             <tr
                                 v-for="client in props.clients.data"
                                 :key="client.id" class="hover"
@@ -276,11 +277,6 @@ let isTableEmpty = Object.keys(props.clients.data).length == 0;
                                         </svg>
                                     </button>
                                 </td>
-                            </tr>
-                        </template>
-                        <template #empty v-else>
-                            <tr class="text-center">
-                                <td colspan="6">Tidak ada data</td>
                             </tr>
                         </template>
                     </Table>

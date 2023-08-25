@@ -6,6 +6,10 @@ const props = defineProps({
         type: Array,
         default: null,
     },
+    empty: {
+        type: Boolean,
+        default: false,
+    },
     current_page: {
         type: Number,
         default: null,
@@ -27,13 +31,17 @@ const props = defineProps({
             <!-- head -->
             <thead class="text-black dark:text-white">
                 <tr>
-                    <th v-for="thead in theads">{{ thead }}</th>
+                    <th v-for="thead in theads" :key="thead">{{ thead }}</th>
                 </tr>
             </thead>
             <tbody class="text-black dark:text-white">
                 <!-- row 1 -->
+                <tr v-show="empty">
+                    <td :colspan="theads.length" class="text-center">
+                        Tidak ada data
+                    </td>
+                </tr>
                 <slot name="content" />
-                <slot name="empty" />
             </tbody>
         </table>
     </div>
@@ -52,7 +60,7 @@ const props = defineProps({
         </button>
         <Link
             :href="next_page"
-            class="bg-white text-black dark:text-white hover:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500join-item btn btn-sm"
+            class="bg-white text-black dark:text-white hover:text-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 join-item btn btn-sm"
             v-if="next_page != null"
             >»</Link
         >

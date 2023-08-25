@@ -2,7 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import DialogModal from "@/Components/DialogModal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { ref } from "vue";
+import { ref,computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Table from "@/Components/Table.vue";
 import InputError from "@/Components/InputError.vue";
@@ -24,6 +24,10 @@ const page = usePage();
 
 const props = defineProps({
     cashflows: Object,
+});
+
+const isTableEmpty = computed(() => {
+    return Object.keys(props.cashflows.data).length == 0;
 });
 
 let titleModal = null;
@@ -125,6 +129,7 @@ const destroyCashFlow = () => {
     formHapus.delete(route("cashflow.destroy", formHapus.cashflow_id), {
         preserveScroll: true,
         onSuccess: () => {
+            modalHapus.value = false;
             formHapus.reset();
             formHapus.clearErrors();
             setTimeout(() => {
@@ -145,7 +150,6 @@ const filterCashFlow = () => {
     });
 };
 
-let isTableEmpty = Object.keys(props.cashflows.data).length == 0;
 </script>
 
 <template>
@@ -221,6 +225,7 @@ let isTableEmpty = Object.keys(props.cashflows.data).length == 0;
                             'Jumlah',
                             'Aksi',
                         ]"
+                        :empty="isTableEmpty"
                         :current_page="props.cashflows.current_page"
                         :next_page="props.cashflows.next_page_url"
                         :prev_page="
@@ -229,7 +234,7 @@ let isTableEmpty = Object.keys(props.cashflows.data).length == 0;
                             (props.cashflows.current_page - 1)
                         "
                     >
-                        <template #content v-if="isTableEmpty == false">
+                        <template #content>
                             <tr
                                 v-for="cashflow in props.cashflows.data"
                                 :key="cashflow.id" class="hover hover:text-white"
@@ -332,11 +337,6 @@ let isTableEmpty = Object.keys(props.cashflows.data).length == 0;
                                         </svg>
                                     </button>
                                 </td>
-                            </tr>
-                        </template>
-                        <template #empty v-else>
-                            <tr class="text-center">
-                                <td colspan="8">Tidak ada data</td>
                             </tr>
                         </template>
                     </Table>
