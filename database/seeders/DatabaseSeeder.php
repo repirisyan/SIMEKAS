@@ -15,16 +15,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Denny',
-            'email' => 'denny@fordigitalresource.com',
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('fdr123!@#'),
-        ]);
-        User::create([
-            'name' => 'Fajar',
-            'email' => 'Fajar@fordigitalresource.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('fdr123!@#'),
+            'password' => Hash::make('password!@#'),
         ]);
         MoneyBalance::create([
             'balance' => 0
