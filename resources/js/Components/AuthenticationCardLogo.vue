@@ -4,6 +4,6 @@ import { Link } from "@inertiajs/vue3";
 
 <template>
     <Link :href="'/'">
-        <img src="/main-logo.png" alt="Logo FDR">
+        <img src="/main-logo.png" alt="Logo FDR" />
     </Link>
 </template>

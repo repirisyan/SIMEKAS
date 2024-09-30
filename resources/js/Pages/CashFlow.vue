@@ -2,12 +2,11 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import DialogModal from "@/Components/DialogModal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { ref,computed } from "vue";
+import { ref, computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Table from "@/Components/Table.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
-import Checkbox from "@/Components/Checkbox.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/vue3";
 import DangerButton from "@/Components/DangerButton.vue";
@@ -16,6 +15,11 @@ import { usePage } from "@inertiajs/vue3";
 import axios from "axios";
 import TextArea from "@/Components/TextArea.vue";
 import { router } from "@inertiajs/vue3";
+import {
+    PencilSquareIcon,
+    TrashIcon,
+    MagnifyingGlassIcon,
+} from "@heroicons/vue/24/outline";
 
 const modal = ref(false);
 const modalHapus = ref(false);
@@ -30,10 +34,7 @@ const isTableEmpty = computed(() => {
     return Object.keys(props.cashflows.data).length == 0;
 });
 
-
-
 let titleModal = null;
-let id_cashflow = null;
 let progress = false;
 
 const cashFlowForm = useForm({
@@ -151,7 +152,6 @@ const filterCashFlow = () => {
         preserveState: true,
     });
 };
-
 </script>
 
 <template>
@@ -170,23 +170,21 @@ const filterCashFlow = () => {
         <div class="p-12">
             <div class="card w-auto bg-white dark:bg-gray-800 shadow-xl">
                 <div class="card-body">
-                    <div
-                        class="card-title flex overflow-x-auto"
-                    >
+                    <div class="card-title flex overflow-x-auto">
                         <PrimaryButton
                             class="mr-2"
                             @click="openModal('Modal Tambah')"
                             >Tambah&nbsp;+
                         </PrimaryButton>
                         <div class="join w-full sm:justify-end text-white">
-                                    <input
-                                        v-model.lazy="filterForm.search"
-                                        class="input input-bordered join-item w-auto"
-                                        placeholder="Cari Judul"
-                                    />
+                            <input
+                                v-model.lazy="filterForm.search"
+                                class="input input-bordered input-sm join-item w-auto"
+                                placeholder="Cari Judul"
+                            />
                             <select
                                 v-model.lazy="filterForm.type"
-                                class="select select-bordered join-item w-auto sm:w-32"
+                                class="select select-bordered join-item w-auto select-sm text-xs sm:w-32"
                             >
                                 <option value="" selected>Semua Jenis</option>
                                 <option value="1">Pemasukan</option>
@@ -195,23 +193,10 @@ const filterCashFlow = () => {
                             <div class="indicator w-auto">
                                 <button
                                     @click="filterCashFlow"
-                                    class="btn join-item"
+                                    class="btn btn-sm join-item text-xs"
                                 >
                                     Cari
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                        />
-                                    </svg>
+                                    <MagnifyingGlassIcon class="w-4 h-4" />
                                 </button>
                             </div>
                         </div>
@@ -239,12 +224,17 @@ const filterCashFlow = () => {
                         <template #content>
                             <tr
                                 v-for="cashflow in props.cashflows.data"
-                                :key="cashflow.id" class="hover hover:text-white"
+                                :key="cashflow.id"
+                                class="hover hover:text-white"
                             >
                                 <td>{{ cashflow.user.name }}</td>
                                 <td>{{ cashflow.title }}</td>
                                 <td>
-                                    {{new Date(cashflow.created_at).toLocaleDateString("id-ID")}}
+                                    {{
+                                        new Date(
+                                            cashflow.created_at,
+                                        ).toLocaleDateString("id-ID")
+                                    }}
                                 </td>
                                 <td>
                                     <div
@@ -287,9 +277,12 @@ const filterCashFlow = () => {
                                     </div>
                                     <span v-else> Tidak ada data </span>
                                 </td>
-                                <td>Rp.
+                                <td>
+                                    Rp.
                                     {{
-                                        new Intl.NumberFormat("id-ID").format(cashflow.amount)
+                                        new Intl.NumberFormat("id-ID").format(
+                                            cashflow.amount,
+                                        )
                                     }}
                                 </td>
                                 <td>
@@ -460,7 +453,18 @@ const filterCashFlow = () => {
                     </div>
 
                     <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="amount" :value="'Jumlah (Rp.'+new Intl.NumberFormat('id-ID').format(titleModal == 'Modal Tambah' ? cashFlowForm.amount : cashFlowForm.new_amount)+')'" />
+                        <InputLabel
+                            for="amount"
+                            :value="
+                                'Jumlah (Rp.' +
+                                new Intl.NumberFormat('id-ID').format(
+                                    titleModal == 'Modal Tambah'
+                                        ? cashFlowForm.amount
+                                        : cashFlowForm.new_amount,
+                                ) +
+                                ')'
+                            "
+                        />
                         <TextInput
                             v-if="titleModal == 'Modal Tambah'"
                             id="amount"

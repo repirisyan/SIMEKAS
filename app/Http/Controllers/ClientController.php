@@ -8,13 +8,12 @@ use Inertia\Inertia;
 
 class ClientController extends Controller
 {
-
     public function index(Request $request)
     {
         return Inertia::render('Client', [
-            'clients' => fn() => Client::when($request->search != null, function($query) use ($request){
-                $query->where('name','like','%'.$request->search.'%');
-            })->simplePaginate(15)
+            'clients' => fn () => Client::when($request->search != null, function ($query) use ($request) {
+                $query->where('name', 'like', '%'.$request->search.'%');
+            })->simplePaginate(15),
         ]);
     }
 
@@ -25,7 +24,7 @@ class ClientController extends Controller
             'company_name' => ['required'],
             'client_email' => ['required', 'email', 'unique:clients,client_email'],
             'whatsapp_number' => ['required', 'numeric', 'unique:clients,whatsapp_number'],
-            'address' => ['required']
+            'address' => ['required'],
         ]);
 
         try {
@@ -34,11 +33,12 @@ class ClientController extends Controller
                 'company_name' => $request->company_name,
                 'client_email' => $request->client_email,
                 'whatsapp_number' => $request->whatsapp_number,
-                'address' => $request->address
+                'address' => $request->address,
             ]);
-            return to_route('client.index')->with('message', array('success','Data berhasil disimpan'));
+
+            return to_route('client.index')->with('message', ['success', 'Data berhasil disimpan']);
         } catch (\Throwable $th) {
-            return to_route('client.index')->with('message', array('error','Terjadi kesalahan saat menyimpan data'));
+            return to_route('client.index')->with('message', ['error', 'Terjadi kesalahan saat menyimpan data']);
         }
     }
 
@@ -46,6 +46,7 @@ class ClientController extends Controller
     {
         try {
             $data = Client::where('id', $id)->first();
+
             return response(json_encode($data));
         } catch (\Throwable $th) {
             return response();
@@ -59,7 +60,7 @@ class ClientController extends Controller
             'company_name' => ['required'],
             'client_email' => ['required', 'email'],
             'whatsapp_number' => ['required', 'numeric'],
-            'address' => ['required']
+            'address' => ['required'],
         ]);
         try {
             Client::find($id)->update([
@@ -67,11 +68,12 @@ class ClientController extends Controller
                 'company_name' => $request->company_name,
                 'client_email' => $request->client_email,
                 'whatsapp_number' => $request->whatsapp_number,
-                'address' => $request->address
+                'address' => $request->address,
             ]);
-            return to_route('client.index')->with('message', array('success','Data berhasil diubah'));
+
+            return to_route('client.index')->with('message', ['success', 'Data berhasil diubah']);
         } catch (\Throwable $th) {
-            return to_route('client.index')->with('message', array('error','Terjadi kesalahan saat mengubah data'));
+            return to_route('client.index')->with('message', ['error', 'Terjadi kesalahan saat mengubah data']);
         }
     }
 
@@ -79,9 +81,10 @@ class ClientController extends Controller
     {
         try {
             Client::destroy($id);
-            return to_route('client.index')->with('message', array('success','Data berhasil dihapus'));
+
+            return to_route('client.index')->with('message', ['success', 'Data berhasil dihapus']);
         } catch (\Throwable $th) {
-            return to_route('client.index')->with('message', array('error','Terjadi kesalahan saat menghapus data'));
+            return to_route('client.index')->with('message', ['error', 'Terjadi kesalahan saat menghapus data']);
         }
     }
 }

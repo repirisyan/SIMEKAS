@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Client;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Client>
  */
@@ -23,8 +24,7 @@ class ClientFactory extends Factory
             'company_name' => $this->faker->company(),
             'client_email' => $this->faker->unique()->email(),
             'whatsapp_number' => $this->faker->unique()->phoneNumber(),
-            'address' => $this->faker->address(),        
+            'address' => $this->faker->address(),
         ];
     }
-
 }

@@ -1,15 +1,15 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import MainCard from "@/Components/MainCard.vue";
-import LineChart from "@/Components/LineChart.vue";
+import BarChart from "@/Components/BarChart.vue";
 
 const props = defineProps({
     saldo: Number,
-    pemasukan: Number,
-    pengeluaran: Number,
+    pemasukan: Number | String,
+    pengeluaran: Number | String,
     client: Number,
     project: Number,
-    chart: Object
+    chart: Object,
 });
 const date = new Date().getFullYear();
 
@@ -21,32 +21,32 @@ props.chart.forEach((element) => {
     if (!labels.includes(element.years)) {
         labels.push(element.years);
     }
-    if (element.type == '1') {
-        data_pemasukan.push(element.data)
-    }else{
-        data_pengeluaran.push(element.data)
+    if (element.type == "1") {
+        data_pemasukan.push(element.data);
+    } else {
+        data_pengeluaran.push(element.data);
     }
 });
 
 const chartData = {
     labels: labels,
     datasets: [
-               {
-                 label: 'Pemasukan',
-                 backgroundColor: '#32cd32',
-                 data: data_pemasukan
-               },
-               {
-                 label: 'Pengeluaran',
-                 backgroundColor: '#fa8072',
-                 data: data_pengeluaran
-               }
-            ],
+        {
+            label: "Pemasukan",
+            backgroundColor: "#32cd32",
+            data: data_pemasukan,
+        },
+        {
+            label: "Pengeluaran",
+            backgroundColor: "#fa8072",
+            data: data_pengeluaran,
+        },
+    ],
     chartOptions: {
-         responsive: true,
-         maintainAspectRatio: false
-    }
-}
+        responsive: true,
+        maintainAspectRatio: false,
+    },
+};
 </script>
 
 <template>
@@ -63,20 +63,23 @@ const chartData = {
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <MainCard
                     :title="'Saldo'"
-                    :value="'Rp.'+
+                    :value="
+                        'Rp.' +
                         new Intl.NumberFormat('id-ID').format(props.saldo)
                     "
                 ></MainCard>
                 <MainCard
                     :title="'Pemasukan'"
-                    :value="'Rp.'+
+                    :value="
+                        'Rp.' +
                         new Intl.NumberFormat('id-ID').format(props.pemasukan)
                     "
                     :desc="date"
                 ></MainCard>
                 <MainCard
                     :title="'Pengeluaran'"
-                    :value="'Rp.'+
+                    :value="
+                        'Rp.' +
                         new Intl.NumberFormat('id-ID').format(props.pengeluaran)
                     "
                     :desc="date"
@@ -92,11 +95,13 @@ const chartData = {
                     :value="props.project"
                 ></MainCard>
             </div>
-            <div class="stats mt-4 shadow bg-white dark:bg-gray-800 dark:text-white">
+            <div
+                class="stats mt-4 shadow bg-white dark:bg-gray-800 dark:text-white"
+            >
                 <div class="stat">
-                      <LineChart :data="chartData" />
+                    <BarChart :data="chartData" />
                 </div>
-             </div>
+            </div>
         </div>
     </AppLayout>
 </template>

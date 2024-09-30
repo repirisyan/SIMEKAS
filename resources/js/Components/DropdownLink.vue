@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 
-defineProps({
+const props = defineProps({
     href: String,
     as: String,
 });
@@ -10,7 +10,7 @@ defineProps({
 <template>
     <div>
         <button
-            v-if="as == 'button'"
+            v-if="props.as == 'button'"
             type="submit"
             class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
         >
@@ -18,8 +18,8 @@ defineProps({
         </button>
 
         <a
-            v-else-if="as == 'a'"
-            :href="href"
+            v-else-if="props.as == 'a'"
+            :href="props.href"
             class="block px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
         >
             <slot />
@@ -27,7 +27,7 @@ defineProps({
 
         <Link
             v-else
-            :href="href"
+            :href="props.href"
             class="block px-4 py-2 text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
         >
             <slot />

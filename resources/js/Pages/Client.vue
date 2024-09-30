@@ -2,7 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import DialogModal from "@/Components/DialogModal.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import { ref,computed } from "vue";
+import { ref, computed } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Table from "@/Components/Table.vue";
 import InputError from "@/Components/InputError.vue";
@@ -14,12 +14,19 @@ import Toastr from "@/Components/Toaster.vue";
 import { usePage } from "@inertiajs/vue3";
 import axios from "axios";
 import { router } from "@inertiajs/vue3";
+import {
+    PencilSquareIcon,
+    TrashIcon,
+    EnvelopeIcon,
+    DevicePhoneMobileIcon,
+    MagnifyingGlassIcon,
+} from "@heroicons/vue/24/outline";
 
 const modal = ref(false);
 const modalHapus = ref(false);
 const isTableEmpty = computed(() => {
     return Object.keys(props.clients.data).length == 0;
-})
+});
 
 const page = usePage();
 
@@ -137,7 +144,6 @@ const filterClient = () => {
         only: ["clients"],
     });
 };
-
 </script>
 
 <template>
@@ -167,7 +173,7 @@ const filterClient = () => {
                                 <div>
                                     <input
                                         v-model.lazy="filterForm.search"
-                                        class="input input-bordered join-item w-42"
+                                        class="input input-bordered join-item input-sm w-42"
                                         placeholder="Cari Nama Client"
                                     />
                                 </div>
@@ -175,23 +181,10 @@ const filterClient = () => {
                             <div class="indicator">
                                 <button
                                     @click="filterClient"
-                                    class="btn join-item"
+                                    class="btn btn-sm join-item text-xs"
                                 >
                                     Cari
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                                        />
-                                    </svg>
+                                    <MagnifyingGlassIcon class="w-4 h-4" />
                                 </button>
                             </div>
                         </div>
@@ -217,16 +210,31 @@ const filterClient = () => {
                         <template #content>
                             <tr
                                 v-for="client in props.clients.data"
-                                :key="client.id" class="hover"
+                                :key="client.id"
+                                class="hover"
                             >
                                 <td>{{ client.name }}</td>
                                 <td>{{ client.company_name }}</td>
                                 <td>
-                                    <a class="hover:text-blue-500" :href="'mailto:'+client.client_email">{{ client.client_email }}</a>
+                                    <a
+                                        class="text-blue-500 flex gap-1"
+                                        :href="'mailto:' + client.client_email"
+                                        ><EnvelopeIcon class="w-4 h-4" />{{
+                                            client.client_email
+                                        }}</a
+                                    >
                                 </td>
                                 <td>
-                                    <a class="hover:text-green-500" :href="'https://wa.me/'+client.whatsapp_number">
-                                        {{ client.whatsapp_number }}
+                                    <a
+                                        class="text-green-500 flex gap-1"
+                                        :href="
+                                            'https://wa.me/' +
+                                            client.whatsapp_number
+                                        "
+                                    >
+                                        <DevicePhoneMobileIcon
+                                            class="w-4 h-4"
+                                        />{{ client.whatsapp_number }}
                                     </a>
                                 </td>
                                 <td>{{ client.address }}</td>
@@ -237,20 +245,7 @@ const filterClient = () => {
                                             openModal('Modal Ubah', client.id)
                                         "
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
-                                            class="w-6 h-6"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                            />
-                                        </svg>
+                                        <PencilSquareIcon class="w-6 h-6" />
                                     </button>
                                     <button
                                         class="text-error"
@@ -261,20 +256,7 @@ const filterClient = () => {
                                             )
                                         "
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
-                                            class="w-6 h-6"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                            />
-                                        </svg>
+                                        <TrashIcon class="w-6 h-6" />
                                     </button>
                                 </td>
                             </tr>
