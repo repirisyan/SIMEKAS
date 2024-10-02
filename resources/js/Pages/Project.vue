@@ -218,7 +218,7 @@ const filterCashFlow = () => {
             v-if="$page.props.flash.message != null"
             :response="$page.props.flash.message"
         />
-        <div class="p-12">
+        <div class="p-6 md:p-12 lg:p-12">
             <div class="card w-auto bg-white dark:bg-gray-800 shadow-xl">
                 <div class="card-body">
                     <div class="card-title flex overflow-x-auto">
